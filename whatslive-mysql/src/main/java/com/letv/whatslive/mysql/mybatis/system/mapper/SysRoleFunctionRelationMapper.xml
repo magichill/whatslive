@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letv.whatslive.mysql.mybatis.system.SysRoleFunctionRelationDao">
+
+    <resultMap id="sysRoleFunctionRelationResultMap" type="SysRoleFunctionRelation">
+        <id property="id" column="ID"/>
+        <result column="ROLE_ID" property="roleId" />
+        <result column="FUNC_ID" property="funcId" />
+    </resultMap>
+
+    <select id="getFunctionIdByRoleId" parameterType="int" resultMap="sysRoleFunctionRelationResultMap">
+        select * from SYS_ROLE_FUNCTION_RELATION
+        where ROLE_ID=#{roleId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SysRoleFunctionRelation" >
+        insert into SYS_ROLE_FUNCTION_RELATION (
+            ROLE_ID,FUNC_ID
+    	) values (
+            #{roleId},#{funcId}
+    	)
+    </insert>
+
+    <delete id="delByRoleId" parameterType="int" >
+        delete from SYS_ROLE_FUNCTION_RELATION
+        where ROLE_ID=#{roleId}
+    </delete>
+
+
+
+</mapper>

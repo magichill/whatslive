@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letv.whatslive.mysql.mybatis.system.SysFunctionDao">
+
+    <resultMap id="sysFunctionResultMap" type="SysFunction">
+        <id property="id" column="ID"/>
+        <result column="FUNC_NAME" property="funcName" />
+        <result column="PARENT_FUNC_ID" property="parentFuncId" />
+        <result column="IS_LEAF" property="isLeaf" />
+        <result column="ACTION_URL" property="actionUrl" />
+        <result column="ICON_URL" property="iconUrl" />
+        <result column="FUNC_ORDER" property="funcOrder" />
+        <result column="CREATED_TIME" property="createdTime" />
+        <result column="UPDATED_TIME" property="updatedTime" />
+    </resultMap>
+
+    <select id="maxOrder" resultType="int" parameterType="int">
+        select max(FUNC_ORDER) from SYS_FUNCTION
+        where PARENT_FUNC_ID= #{parentFuncId}
+    </select>
+
+    <select id="countByParentId" parameterType="int" resultType="int">
+        select count(*) from SYS_FUNCTION
+        where PARENT_FUNC_ID= #{parentFuncId}
+    </select>
+
+    <select id="getByParentId" parameterType="int" resultMap="sysFunctionResultMap">
+        select * from SYS_FUNCTION
+        where PARENT_FUNC_ID= #{parentFuncId}
+        order by ID;
+    </select>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SysFunction">
+        insert into SYS_FUNCTION (
+            FUNC_NAME,PARENT_FUNC_ID,IS_LEAF,ACTION_URL,ICON_URL,FUNC_ORDER,CREATED_TIME,UPDATED_TIME
+    	) values (
+            #{funcName},#{parentFuncId},#{isLeaf},#{actionUrl},#{iconUrl},#{funcOrder},#{createdTime},#{updatedTime}
+    	)
+
+    </insert>
+
+    <update id="updateSysFunction" parameterType="SysFunction">
+        update SYS_FUNCTION
+        <set>
+            <if test="funcName != null">FUNC_NAME=#{funcName},</if>
+            <if test="parentFuncId != null">PARENT_FUNC_ID=#{parentFuncId},</if>
+            <if test="isLeaf != null">IS_LEAF=#{isLeaf},</if>
+            <if test="actionUrl != null">ACTION_URL=#{actionUrl},</if>
+            <if test="iconUrl != null">ICON_URL=#{iconUrl},</if>
+            <if test="funcOrder != null">FUNC_ORDER=#{funcOrder},</if>
+            <if test="createdTime != null">CREATED_TIME=#{createdTime},</if>
+            <if test="updatedTime != null">UPDATED_TIME=#{updatedTime},</if>
+        </set>
+        where ID=#{id}
+    </update>
+
+    <select id="getById" parameterType="int" resultMap="sysFunctionResultMap">
+        select *
+        from SYS_FUNCTION
+        where id = #{id}
+    </select>
+
+    <select id="getList" parameterType="map" resultMap="sysFunctionResultMap">
+        select *
+        from SYS_FUNCTION
+        <where>
+            <if test="parentFuncId != null">
+                PARENT_FUNC_ID=#{parentFuncId}
+            </if>
+            <if test="isLeaf != null">
+                and IS_LEAF=#{isLeaf}
+            </if>
+        </where>
+        order by FUNC_ORDER
+    </select>
+
+    <select id="countFunction" parameterType="map" resultType="int">
+        select count(1) from SYS_FUNCTION
+        <include refid="queryCondition"/>
+    </select>
+
+    <select id="getFunctionList" parameterType="map" resultMap="sysFunctionResultMap">
+        select * from SYS_FUNCTION
+        <include refid="queryCondition"/>
+        order by ID,PARENT_FUNC_ID,FUNC_ORDER
+        <if test="start != null  and limit != null">
+            limit #{start},#{limit};
+        </if>
+
+    </select>
+
+
+    <sql id="queryCondition">
+        <where>
+            <if test="id != null">
+                ID=#{id}
+            </if>
+            <if test="funcName != null">
+                and FUNC_NAME=#{funcName}
+            </if>
+            <if test="parentFuncId != null">
+                and PARENT_FUNC_ID=#{parentFuncId}
+            </if>
+            <if test="isLeaf != null">
+                and IS_LEAF=#{isLeaf}
+            </if>
+            <if test="funcOrder != null">
+                and FUNC_ORDER=#{funcOrder}
+            </if>
+            <if test="searchName != null">
+                and FUNC_NAME like concat('%',#{searchName},'%')
+            </if>
+        </where>
+    </sql>
+
+
+
+</mapper>

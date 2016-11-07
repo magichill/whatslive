@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="orderPush" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+            <ref bean="orderPushService"/>
+        </property>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>scanAllOrderTimer</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+
+    <!-- 定义触发时间 -->
+    <bean id="orderPushTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="orderPush"/>
+        </property>
+        <!-- cron表达式 -->
+        <property name="cronExpression">
+            <value>0 01/1 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="updatePic" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+            <ref bean="userPicService"/>
+        </property>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>updateUserPic</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+
+    <bean id="updatePicTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="updatePic"/>
+        </property>
+        <!-- cron表达式 -->
+        <property name="cronExpression">
+            <value>0 01/1 * * * ?</value>
+        </property>
+    </bean>
+    <!-- 定义调用对象和调用对象的方法 -->
+    <!--<bean id="testPushTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="orderPushService"/>
+        </property>
+        <property name="targetMethod">
+            <value>testPush</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+
+    <bean id="testPushTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="testPushTask"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 17/30 * * * ?</value>
+        </property>
+    </bean>-->
+
+    <bean id="startQuertz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="orderPushTrigger"/>
+                <ref bean="updatePicTrigger"/>
+                <!--<ref bean="testPushTrigger"/>-->
+            </list>
+        </property>
+    </bean>
+
+</beans>

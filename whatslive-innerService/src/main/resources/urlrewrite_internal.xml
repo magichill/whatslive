@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN" "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
+
+<urlrewrite>
+    <rule>
+        <note>cdn文件分发回调</note>
+        <from>^/whatslive/cdncallback</from>
+        <to>/psiservice?service=CdnController&amp;method=cdncallback</to>
+    </rule>
+    <rule>
+        <note>测试推送</note>
+        <from>^/whatslive/testpush</from>
+        <to>/psiservice?service=TestingController&amp;method=testpush</to>
+    </rule>
+    <rule>
+        <note>推送消息到所有设备</note>
+        <from>^/whatslive/pushToAll</from>
+        <to>/psiservice?service=BaiduPushController&amp;method=pushToAll</to>
+    </rule>
+    <rule>
+        <note>推送消息到标签下的所有设备</note>
+        <from>^/whatslive/pushToTag</from>
+        <to>/psiservice?service=BaiduPushController&amp;method=pushToTag</to>
+    </rule>
+    <rule>
+        <note>推送预约消息</note>
+        <from>^/whatslive/pushOrder</from>
+        <to>/psiservice?service=BaiduPushController&amp;method=pushOrder</to>
+    </rule>
+    <rule>
+        <note>增加标签</note>
+        <from>^/whatslive/createTag</from>
+        <to>/psiservice?service=BaiduPushController&amp;method=createTag</to>
+    </rule>
+    <rule>
+        <note>增加标签中的设备</note>
+        <from>^/whatslive/addDevicesToTag</from>
+        <to>/psiservice?service=BaiduPushController&amp;method=addDevicesToTag</to>
+    </rule>
+    <rule>
+        <note>查询消息的状态</note>
+        <from>^/whatslive/queryMsgStatus</from>
+        <to>/psiservice?service=BaiduPushController&amp;method=queryMsgStatus</to>
+    </rule>
+</urlrewrite>

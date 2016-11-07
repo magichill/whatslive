@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letv.whatslive.mysql.mybatis.system.SysUserDao">
+
+    <resultMap id="sysUserResultMap" type="SysUser">
+        <id property="id" column="ID"/>
+        <result column="LOGIN_NAME" property="loginName" />
+        <result column="PAZZWORD" property="pazzword" />
+        <result column="USER_NAME" property="userName" />
+        <result column="IS_EFFECTIVE" property="isEffective" />
+        <result column="CREATED_TIME" property="createdTime" />
+        <result column="UPDATED_TIME" property="updatedTime" />
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SysUser">
+		insert into SYS_USER (
+            LOGIN_NAME,PAZZWORD,USER_NAME,IS_EFFECTIVE,CREATED_TIME,UPDATED_TIME
+    	) values (
+            #{loginName},#{pazzword},#{userName},#{isEffective},#{createdTime},#{updatedTime}
+    	)
+	</insert>
+
+    <update id="update" parameterType="SysUser">
+        update SYS_USER
+        <set>
+            <if test="loginName != null">LOGIN_NAME=#{loginName},</if>
+            <if test="pazzword != null">PAZZWORD=#{pazzword},</if>
+            <if test="userName != null">USER_NAME=#{userName},</if>
+            <if test="isEffective != null">IS_EFFECTIVE=#{isEffective},</if>
+        </set>
+        where ID=#{id}
+    </update>
+
+    <select id="get" parameterType="map" resultMap="sysUserResultMap">
+        select *
+        from SYS_USER
+        <where>
+            <if test="loginName != null">
+                LOGIN_NAME=#{loginName}
+            </if>
+            <if test="isEffective != null">
+                and IS_EFFECTIVE=#{isEffective}
+            </if>
+            <if test="id != null">
+                and ID=#{id}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="getMaxId" resultType="int">
+        select max(id) from SYS_USER;
+    </select>
+
+
+    <select id="countByLoginNameAndPassword" parameterType="map" resultType="int">
+        select count(*)
+        from SYS_USER
+        where LOGIN_NAME = #{loginName}
+        and PAZZWORD = #{pazzword}
+        and IS_EFFECTIVE = 1
+    </select>
+
+    <select id="countUserFuncRelation" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM SYS_USER_ROLE_RELATION T1, SYS_ROLE T2,
+        SYS_ROLE_FUNCTION_RELATION T3, SYS_FUNCTION T4
+		WHERE T1.USER_ID = #{userId}
+		AND T4.ID = #{funcId}
+		AND T1.ROLE_ID = T2.ID
+		AND T2.ID = T3.ROLE_ID
+	    AND T3.FUNC_ID = T4.ID
+    </select>
+
+    <select id="checkSysUser" parameterType="string" resultType="int">
+        select count(*) from SYS_USER
+        where LOGIN_NAME=#{loginName}
+    </select>
+
+    <select id="countSysUser" parameterType="map" resultType="int">
+        SELECT COUNT(*) from SYS_USER
+        <include refid="queryCondition"/>
+    </select>
+
+    <select id="getSysUserList" parameterType="map" resultMap="sysUserResultMap">
+        SELECT * from SYS_USER
+        <include refid="queryCondition"/>
+        order by ID desc
+        <if test="start != null  and limit != null">
+            limit #{start},#{limit};
+        </if>
+    </select>
+
+    <select id="getSysUserById" parameterType="int" resultMap="sysUserResultMap">
+        SELECT * from SYS_USER
+        where ID=#{id}
+    </select>
+
+    <sql id="queryCondition">
+        <where>
+            <if test="loginName != null">
+                LOGIN_NAME=#{loginName}
+            </if>
+            <if test="userName != null">
+                and USER_NAME=#{userName}
+            </if>
+            <if test="isEffective != null">
+                and IS_EFFECTIVE=#{isEffective}
+            </if>
+            <if test="searchName != null">
+                and (
+                USER_NAME like concat('%',#{searchName},'%')
+                or LOGIN_NAME like concat('%',#{searchName},'%')
+                )
+            </if>
+        </where>
+    </sql>
+
+</mapper>

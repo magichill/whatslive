@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <description>导入项目所需的中的applicationContext文件列表</description>
+
+    <bean id="cofigBean" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/properties/jdbc.properties</value>
+                <value>classpath:/properties/mongo.properties</value>
+                <value>classpath:/properties/redis.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <import resource="classpath*:/spring/applicationContext-core.xml"/>
+    <import resource="classpath*:/spring/applicationContext-mysql.xml"/>
+    <import resource="classpath*:/spring/applicationContext-redis.xml"/>
+    <import resource="classpath*:/spring/applicationContext-upload.xml"/>
+    <import resource="classpath*:/spring/applicationContext-task.xml"/>
+</beans>

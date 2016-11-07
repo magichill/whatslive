@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>whatslive</artifactId>
+        <groupId>com.letv.whatslive</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>whatslive-push</artifactId>
+
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.7</java.version>
+        <guava.version>16.0.1</guava.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+        <skip_maven_deploy>false</skip_maven_deploy>
+        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-redis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-mongo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+            <version>1.2.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>1.2.5.RELEASE</version>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>com.corundumstudio.socketio</groupId>
+            <artifactId>netty-socketio</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jzlib</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j</artifactId>
+            <version>1.2.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>whatslive-push-${project.version}-${profileName}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.5</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/assembly/conf</directory>
+                <includes>
+                    <include>log4j.*</include>
+                    <include>*.properties</include>
+                    <include>*.xml</include>
+                    <include>*.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profileName>prod</profileName>
+                <server.port>9100</server.port>
+                <!-- redis -->
+                <redis.host>10.200.93.225</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.passwd>h2zIokBeymzd:t7</redis.passwd>
+                <redis.write.host>10.200.93.225</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd>h2zIokBeymzd:t7</redis.write.passwd>
+                <redis.read.host>10.200.93.231</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd>h2zIokBeymzd:t7</redis.read.passwd>
+                <redisconsumer.thread.number>2</redisconsumer.thread.number>
+                <redis.topic.name>topic:chat</redis.topic.name>
+                <!--Mongo DB-->
+                <mongo.replica.set>10.150.130.28:9014,10.150.130.30:9014,10.150.130.32:9014</mongo.replica.set>
+                <mongo.database>whatslive</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>50</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>c568baf64d230b5</mongo.password>
+
+                <!--Mongo Media DB-->
+                <media.mongo.replica.set>10.150.130.28:9014,10.150.130.30:9014,10.150.130.32:9014</media.mongo.replica.set>
+                <media.mongo.database>ugc-media</media.mongo.database>
+                <media.mongo.auth>admin</media.mongo.auth>
+                <media.mongo.connections>50</media.mongo.connections>
+                <media.mongo.user>admin</media.mongo.user>
+                <media.mongo.password>c568baf64d230b5</media.mongo.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profileName>test</profileName>
+
+                <server.port>9100</server.port>
+                <!-- redis -->
+                <redis.host>10.154.157.165</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.passwd></redis.passwd>
+                <redis.write.host>10.154.157.165</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.165</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redisconsumer.thread.number>2</redisconsumer.thread.number>
+                <redis.topic.name>topic:chat</redis.topic.name>
+                <!--Mongo DB-->
+                <mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</mongo.replica.set>
+                <mongo.database>whatslive</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>20</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>52b2ce34b6cb814</mongo.password>
+
+                <!--Mongo Media DB-->
+                <media.mongo.replica.set>10.150.130.28:9014,10.150.130.30:9014,10.150.130.32:9014</media.mongo.replica.set>
+                <media.mongo.database>ugc-media</media.mongo.database>
+                <media.mongo.auth>admin</media.mongo.auth>
+                <media.mongo.connections>50</media.mongo.connections>
+                <media.mongo.user>admin</media.mongo.user>
+                <media.mongo.password>c568baf64d230b5</media.mongo.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profileName>dev</profileName>
+
+                <server.port>9100</server.port>
+                <!-- redis -->
+                <redis.host>10.154.157.167</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.passwd></redis.passwd>
+                <redis.write.host>10.154.157.167</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.167</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redisconsumer.thread.number>2</redisconsumer.thread.number>
+                <redis.topic.name>topic:chat</redis.topic.name>
+                <!--Mongo DB-->
+                <mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</mongo.replica.set>
+                <mongo.database>whatslive-test</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>20</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>52b2ce34b6cb814</mongo.password>
+
+                <!--Mongo Media DB-->
+                <media.mongo.replica.set>10.150.130.28:9014,10.150.130.30:9014,10.150.130.32:9014</media.mongo.replica.set>
+                <media.mongo.database>ugc-media</media.mongo.database>
+                <media.mongo.auth>admin</media.mongo.auth>
+                <media.mongo.connections>50</media.mongo.connections>
+                <media.mongo.user>admin</media.mongo.user>
+                <media.mongo.password>c568baf64d230b5</media.mongo.password>
+            </properties>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

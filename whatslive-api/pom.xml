@@ -1,0 +1,356 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>whatslive</artifactId>
+        <groupId>com.letv.whatslive</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>whatslive-api</artifactId>
+    <packaging>jar</packaging>
+
+    <name>whatslive-api</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <amazonaws.version>1.9.39</amazonaws.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-mongo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>me.zhuoran.amoeba</groupId>
+            <artifactId>amoeba</artifactId>
+            <version>0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.facebook4j</groupId>
+            <artifactId>facebook4j-core</artifactId>
+            <version>[2.2,)</version>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>[4.0,)</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.5</version>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>commons-logging</groupId>-->
+        <!--<artifactId>commons-logging</artifactId>-->
+        <!--<version>1.0.4</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.letv.openapi</groupId>
+            <artifactId>openapi-sdk-java</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--swiftq -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-jms</artifactId>-->
+            <!--<version>3.1.0.RELEASE</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.apache.qpid</groupId>-->
+            <!--<artifactId>qpid-client</artifactId>-->
+            <!--<version>0.24</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.geronimo.specs</groupId>-->
+            <!--<artifactId>geronimo-jms_1.1_spec</artifactId>-->
+            <!--<version>1.0</version>-->
+        <!--</dependency>-->
+        <!---->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>1.2.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>${amazonaws.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.weibo</groupId>
+            <artifactId>weibo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/assembly/conf</directory>
+                <includes>
+                    <include>log4j.*</include>
+                    <include>*.properties</include>
+                    <include>*.xml</include>
+                    <include>*.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profileName>local</profileName>
+                <mongo.replica.set>127.0.0.1:27017</mongo.replica.set>
+                <mongo.database>test</mongo.database>
+                <mongo.auth></mongo.auth>
+                <mongo.connections>20</mongo.connections>
+                <mongo.user></mongo.user>
+                <mongo.password></mongo.password>
+
+                <!--Mongo Media DB-->
+                <media.mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</media.mongo.replica.set>
+                <media.mongo.database>whatslive-media</media.mongo.database>
+                <media.mongo.auth>admin</media.mongo.auth>
+                <media.mongo.connections>20</media.mongo.connections>
+                <media.mongo.user>admin</media.mongo.user>
+                <media.mongo.password>52b2ce34b6cb814</media.mongo.password>
+
+                <cryptos.key>EXPeL9l%u*6iRsVR^gNBXD!dae5Iok</cryptos.key>
+                <redis.host>10.154.157.167</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.write.host>10.154.157.167</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.167</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redis.timeout>10000</redis.timeout>
+                <redisconsumer.thread.number>2</redisconsumer.thread.number>
+                <redis.topic.name>topic:chat</redis.topic.name>
+                <chat.server>http://10.154.157.165:9093/</chat.server>
+
+                <up.token.uri>http://api.cloud.letv.com/uss/uptoken</up.token.uri>
+                <up.cloud.uri>http://api.cloud.letv.com</up.cloud.uri>
+
+                <up.compress.callback.uri>http://10.104.29.13:8003/lehi/uploadImg/callback</up.compress.callback.uri>
+                <up.icon.compress.callback.uri>http://10.104.29.13:8003/lehi/icon/callback</up.icon.compress.callback.uri>
+
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profileName>prod</profileName>
+                <!--Mongo DB-->
+                <mongo.replica.set>10.150.130.28:9014,10.150.130.30:9014,10.150.130.32:9014</mongo.replica.set>
+                <mongo.database>whatslive</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>2000</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>c568baf64d230b5</mongo.password>
+                <!--Mongo Media DB-->
+                <media.mongo.replica.set>10.150.130.28:9014,10.150.130.30:9014,10.150.130.32:9014</media.mongo.replica.set>
+                <media.mongo.database>ugc-media</media.mongo.database>
+                <media.mongo.auth>admin</media.mongo.auth>
+                <media.mongo.connections>50</media.mongo.connections>
+                <media.mongo.user>admin</media.mongo.user>
+                <media.mongo.password>c568baf64d230b5</media.mongo.password>
+
+                <cryptos.key>EXPeL9l%u*6iRsVR^gNBXD!dae5Ias</cryptos.key>
+
+
+                <redis.host>10.200.93.225</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.passwd>h2zIokBeymzd:t7</redis.passwd>
+                <redis.write.host>10.200.93.225</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd>h2zIokBeymzd:t7</redis.write.passwd>
+                <redis.read.host>10.200.93.231</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd>h2zIokBeymzd:t7</redis.read.passwd>
+                <redis.timeout>10000</redis.timeout>
+                <redisconsumer.thread.number>2</redisconsumer.thread.number>
+                <redis.topic.name>topic:chat</redis.topic.name>
+                <chat.server>http://10.58.94.3:8080/</chat.server>
+
+                <up.token.uri>http://api.cloud.letv.com/uss/uptoken</up.token.uri>
+                <up.cloud.uri>http://api.cloud.letv.com</up.cloud.uri>
+                <up.appkey>whatslive</up.appkey>
+
+                <letv.cloud.userid>257897</letv.cloud.userid>
+                <letv.cloud.secret>541101e0d3321f43d7254a97579e7bcf</letv.cloud.secret>
+                <letv.cloud.uuid>cd5f283012</letv.cloud.uuid>
+                <up.compress.callback.uri>http://220.181.155.211:8003/lehi/uploadImg/callback</up.compress.callback.uri>
+                <up.icon.compress.callback.uri>http://220.181.155.211:8003/lehi/icon/callback</up.icon.compress.callback.uri>
+
+                <share.url>http://lehi.letv.com/share/</share.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profileName>test</profileName>
+                <mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</mongo.replica.set>
+                <mongo.database>whatslive</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>2000</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>52b2ce34b6cb814</mongo.password>
+
+                <!--Mongo Media DB-->
+                <media.mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</media.mongo.replica.set>
+                <media.mongo.database>whatslive-media</media.mongo.database>
+                <media.mongo.auth>admin</media.mongo.auth>
+                <media.mongo.connections>20</media.mongo.connections>
+                <media.mongo.user>admin</media.mongo.user>
+                <media.mongo.password>52b2ce34b6cb814</media.mongo.password>
+
+                <cryptos.key>EXPeL9l%u*6iRsVR^gNBXD!dae5Ias</cryptos.key>
+                <redis.host>10.154.157.165</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.write.host>10.154.157.165</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.165</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redis.timeout>10000</redis.timeout>
+                <redisconsumer.thread.number>2</redisconsumer.thread.number>
+                <redis.topic.name>topic:chat</redis.topic.name>
+                <chat.server>http://10.154.157.165:9093/</chat.server>
+
+                <up.token.uri>http://api.cloud.letv.com/uss/uptoken</up.token.uri>
+                <up.cloud.uri>http://api.cloud.letv.com</up.cloud.uri>
+                <up.appkey>whatslive</up.appkey>
+
+                <up.compress.callback.uri>http://10.104.29.13:8003/lehi/uploadImg/callback</up.compress.callback.uri>
+                <up.icon.compress.callback.uri>http://10.104.29.13:8003/lehi/icon/callback</up.icon.compress.callback.uri>
+
+                <letv.cloud.userid>803473</letv.cloud.userid>
+                <letv.cloud.secret>96f1fa1e58c5243a058b84e41926da9e</letv.cloud.secret>
+                <letv.cloud.uuid>fpzuozvzoz</letv.cloud.uuid>
+                <share.url>http://test.lehi.letv.com/share/</share.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>testing</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profileName>testing</profileName>
+                <mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</mongo.replica.set>
+                <mongo.database>whatslive-test</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>2000</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>52b2ce34b6cb814</mongo.password>
+
+                <!--Mongo Media DB-->
+                <media.mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</media.mongo.replica.set>
+                <media.mongo.database>whatslive-media</media.mongo.database>
+                <media.mongo.auth>admin</media.mongo.auth>
+                <media.mongo.connections>20</media.mongo.connections>
+                <media.mongo.user>admin</media.mongo.user>
+                <media.mongo.password>52b2ce34b6cb814</media.mongo.password>
+
+                <cryptos.key>EXPeL9l%u*6iRsVR^gNBXD!dae5Iok</cryptos.key>
+                <redis.host>10.154.157.167</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.write.host>10.154.157.167</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.167</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redis.timeout>10000</redis.timeout>
+                <redisconsumer.thread.number>2</redisconsumer.thread.number>
+                <redis.topic.name>topic:chat</redis.topic.name>
+                <chat.server>http://10.154.157.165:9093/</chat.server>
+
+                <up.token.uri>http://api.cloud.letv.com/uss/uptoken</up.token.uri>
+                <up.cloud.uri>http://api.cloud.letv.com</up.cloud.uri>
+                <up.appkey>whatslive</up.appkey>
+
+                <up.compress.callback.uri>http://10.104.29.19:8003/lehi/uploadImg/callback</up.compress.callback.uri>
+                <up.icon.compress.callback.uri>http://10.104.29.19:8003/lehi/icon/callback</up.icon.compress.callback.uri>
+
+                <letv.cloud.userid>802054</letv.cloud.userid>
+                <letv.cloud.secret>83e7769aa728ffd9528f96d8813aa1ad</letv.cloud.secret>
+                <letv.cloud.uuid>vxnnn6zh6b</letv.cloud.uuid>
+                <share.url>http://dev.lehi.letv.com/share/</share.url>
+                <!--<up.compress.callback.uri>http://callback.lepai.letv.com:20001/lepai/uploadImg/callback</up.compress.callback.uri>-->
+                <!--<up.icon.compress.callback.uri>http://callback.lepai.letv.com:20001/lepai/icon/callback</up.icon.compress.callback.uri>-->
+            </properties>
+        </profile>
+    </profiles>
+</project>

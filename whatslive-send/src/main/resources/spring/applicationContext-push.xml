@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="baiduPushAndroidPushKeyPair"
+          class="com.baidu.yun.push.auth.PushKeyPair">
+        <constructor-arg index="0" value="${baidu.push.android.apiKey}"/>
+        <constructor-arg index="1" value="${baidu.push.android.secretKey}" />
+    </bean>
+
+    <bean id="baiduPushIOSPushKeyPair"
+          class="com.baidu.yun.push.auth.PushKeyPair">
+        <constructor-arg index="0" value="${baidu.push.ios.apiKey}"/>
+        <constructor-arg index="1" value="${baidu.push.ios.secretKey}" />
+    </bean>
+
+    <bean id="baiduPushAndroidClient"
+          class="com.baidu.yun.push.client.BaiduPushClient">
+        <constructor-arg index="0" ref="baiduPushAndroidPushKeyPair"/>
+        <constructor-arg index="1" value="${baidu.push.url}" />
+    </bean>
+
+    <bean id="baiduPushIOSClient"
+          class="com.baidu.yun.push.client.BaiduPushClient">
+        <constructor-arg index="0" ref="baiduPushIOSPushKeyPair"/>
+        <constructor-arg index="1" value="${baidu.push.url}" />
+    </bean>
+
+    <bean id="baiduAndroidTagService"
+          class="com.letv.whatslive.send.service.tag.BaiduTagService">
+        <constructor-arg index="0" ref="baiduPushAndroidClient"/>
+        <constructor-arg index="1" value="3" />
+    </bean>
+
+    <bean id="baiduIOSTagService"
+          class="com.letv.whatslive.send.service.tag.BaiduTagService">
+        <constructor-arg index="0" ref="baiduPushIOSClient"/>
+        <constructor-arg index="1" value="4" />
+    </bean>
+
+    <bean id="baiduAndroidQueryService"
+          class="com.letv.whatslive.send.service.query.BaiduQueryService">
+        <constructor-arg index="0" ref="baiduPushAndroidClient"/>
+        <constructor-arg index="1" value="3" />
+    </bean>
+
+    <bean id="baiduIOSQueryService"
+          class="com.letv.whatslive.send.service.query.BaiduQueryService">
+        <constructor-arg index="0" ref="baiduPushIOSClient"/>
+        <constructor-arg index="1" value="4" />
+    </bean>
+
+</beans>

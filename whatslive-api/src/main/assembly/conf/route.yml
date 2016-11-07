@@ -1,0 +1,118 @@
+#结构 cmd参数: 控制类（controller）,方法名（method）
+#controller命名必须和Service注解的value一致
+
+#直播节目接口
+#创建直播
+createProgram: programController,createProgram
+#创建可以持续推流的直播
+createContinueProgram: programController,createContinueProgram
+#直播详情
+programDetail: programController,getProgram
+#点赞
+likeProgram: programController,likeProgram
+#直播节目列表
+programList: programController,programList
+playUrl: programController,playUrl
+#关闭直播
+closeProgram: programController,closeProgram
+#观看者预约直播
+subscribe: programController,subscribeProgram
+#发起预约直播
+planProgram: programController,planProgram
+#获取用户发布直播列表
+privatePrograms: programController,privatePrograms
+#直播结束数据
+programEnd: programController,programEnd
+#更新直播封面图
+updateProgramPic: programController,updateProgramPic
+#获取用户预约的
+planProgramListByUser: programController,planProgramListByUser
+#换台接口
+switchProgram: programController,switchProgram
+#取消预约直播
+cancelProgram: programController,cancelProgram
+#拉取预约提醒接口
+pushSchedule: programController,pushSchedule
+#启动预约直播
+startPlanProgram: programController,startPlanProgram
+#预约过期结束
+closePlanProgram: programController,closePlanProgram
+#用户的录播视频
+myReplay: programController,myReplay
+#获取分享的预直播id
+generateProgramId: programController,generateProgramId
+#删除录播
+removeReplay: programController,removeReplay
+updateCount: programController,updateCount
+#推荐列表接口
+recommend: programController,recommend
+#同城直播列表
+cityProgramList: programController,cityProgramList
+#搜索接口
+programSearchList: programController,programSearchList
+
+getActivityStatus: programController,getActivityStatus
+#用户举报直播接口
+report: reportController,addReport
+#reportStatus: reportController,checkReport
+
+#首页活动列表
+activityList: operationController,activityList
+activityListV2: operationController,activityListV2
+addActivity: operationController,addActivity
+activityContent: operationController,activityContent
+
+#用户接口
+login: userController,login
+loginH5: userController,loginH5
+twitterAuthUrl: userController,twitterAuthUrl
+share: userController,share
+friends: userController,friends
+updateUser: userController,updateUser
+bindUser: userController,bindUser
+userAccount: userController,userAccount
+onlineUser: userController,onlineUser
+updateUserIcon: userController,updateUserIcon
+viewers: userController,viewers
+feedBack: userController,feedBack
+getUserInfo: userController,getUserInfo
+
+onlineUserV2: userController,onlineUserV2
+
+#国内版用户登录
+thirdAppLogin: innerUserController,thirdAppLogin
+thirdH5Login: innerUserController,thirdH5Login
+bindWeibo: innerUserController,bindWeibo
+weiboFriends: innerUserController,weiboFriends
+uploadUser: innerUserController,uploadUser
+
+#聊天室接口
+chatServer: chatController,chatServer
+chat: chatController,chat
+createRoom: chatController,createRoom
+
+#评论接口
+submitComment: commentController,submitComment
+
+#好友相关接口
+followers: friendController,getFollowers
+focus: friendController,getFocus
+focusAction: friendController,focusFriends
+otherFollower: friendController,getOtherFollowers
+otherFocus: friendController,getOtherFocus
+
+#登陆后宣传视频
+index: indexController,index
+startup: indexController,startup
+
+#个人中心消息
+messageCount: messageController,messageCount
+messageList: messageController,messageList
+
+#云盘上传接口
+getUpToken: uploadController,getUpToken
+compressPic: uploadController,compressPic
+
+#更新设备channelId
+updateChannelId: deviceController,updateChannelId
+

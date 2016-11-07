@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letv.whatslive.mysql.mybatis.system.SysRoleProductRelationDao" >
+
+	<resultMap id="roleProductRelationResultMap" type="SysRoleProductRelation" >
+		<id  property="id" column="ID"/>
+		<result property="roleId" column="ROLE_ID"/>
+		<result property="proId" column="PRO_ID"/>
+	</resultMap>
+  
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SysRoleProductRelation" >
+		insert into SYS_ROLE_PRODUCT_RELATION (
+            ROLE_ID,PRO_ID
+                    ) values (
+            #{roleId},#{proId}
+    	)
+	</insert>
+
+	<update id="update" parameterType="SysRoleProductRelation">
+		update SYS_ROLE_PRODUCT_RELATION
+    	<set>
+  			<if test="roleId != null">ROLE_ID=#{roleId},</if>
+  			<if test="proId != null">PRO_ID=#{proId}</if>
+		</set>
+		where ID=#{id}
+	</update>
+  
+	<select id="getRoleProductRelationById" parameterType="int" resultMap="roleProductRelationResultMap">
+		select * from SYS_ROLE_PRODUCT_RELATION
+		where ID=#{id} 
+	</select>
+  
+	<select id="countRoleProductRelation" parameterType="map" resultType="int">
+		select count(*) from SYS_ROLE_PRODUCT_RELATION
+		<include refid="queryCondition"/>
+	</select>
+  
+	<select id="getRoleProductRelationList" parameterType="map" resultMap="roleProductRelationResultMap">
+		select * from SYS_ROLE_PRODUCT_RELATION
+		<include refid="queryCondition"/>
+	</select>
+	<select id="getRoleProductRelationListByRoleId" parameterType="int" resultMap="roleProductRelationResultMap">
+		select * from SYS_ROLE_PRODUCT_RELATION
+		WHERE ROLE_ID=#{roleId}
+	</select>
+
+    <delete id="delByRoleId" parameterType="int">
+        delete from SYS_ROLE_PRODUCT_RELATION
+        where ROLE_ID=#{roleId}
+    </delete>
+
+	<sql id="queryCondition">
+		<where>
+			<if test="id != null">ID=#{id}</if>
+			<if test="roleId != null">and ROLE_ID=#{roleId}</if>
+			<if test="proId != null">and PRO_ID=#{proId}</if>
+		</where>
+	</sql>
+   
+</mapper>

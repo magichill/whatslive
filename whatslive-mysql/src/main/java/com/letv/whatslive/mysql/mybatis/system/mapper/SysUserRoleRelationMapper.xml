@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letv.whatslive.mysql.mybatis.system.SysUserRoleRelationDao">
+
+    <resultMap id="sysUserRoleRelationResultMap" type="SysUserRoleRelation">
+        <id property="id" column="ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="roleId" column="ROLE_ID"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SysUserRoleRelation">
+		insert into SYS_USER_ROLE_RELATION (
+            USER_ID,ROLE_ID
+    	) values (
+            #{userId},#{roleId}
+    	)
+	</insert>
+
+    <delete id="deleteByUserId" parameterType="int">
+        delete from SYS_USER_ROLE_RELATION
+        where USER_ID=#{userId}
+    </delete>
+
+    <select id="getSysUserRoleRelationSetByUserId" parameterType="int" resultMap="sysUserRoleRelationResultMap">
+        select distinct *  from SYS_USER_ROLE_RELATION
+        where USER_ID=#{userId}
+    </select>
+
+</mapper>

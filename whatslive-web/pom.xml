@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.letv.whatslive</groupId>
+        <artifactId>whatslive</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>whatslive-web</artifactId>
+    <packaging>war</packaging>
+
+    <name>whatslive-web</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <shiro.version>1.2.1</shiro.version>
+        <sitemesh.version>2.4.2</sitemesh.version>
+        <spring.version>3.1.3.RELEASE</spring.version>
+        <amazonaws.version>1.9.39</amazonaws.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-mongo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-redis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.letv.whatslive</groupId>
+            <artifactId>whatslive-mysql</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- spring start-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ldap</groupId>
+            <artifactId>spring-ldap</artifactId>
+            <version>1.3.1.RELEASE</version>
+            <classifier>all</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- j2ee web spec -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- WEB end -->
+
+        <!-- SECURITY begin -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- SECURITY end -->
+
+        <!-- sitemesh -->
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>${sitemesh.version}</version>
+        </dependency>
+
+        <!-- API for log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!-- API for zip -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.6</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+
+        <!-- jackson -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+        <!-- apache utils start-->
+        <!-- httpClient -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        <!-- apache utils end-->
+
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.7</version>
+        </dependency>
+
+        <!-- spring mvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- spring end-->
+
+        <!-- AOP begin-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>3.3.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- AOP end -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-core</artifactId>
+            <version>${amazonaws.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>${amazonaws.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jmagick</groupId>
+            <artifactId>jmagick</artifactId>
+            <version>6.6.9</version>
+            <!-- scope>provided</scope> -->
+        </dependency>
+
+        <dependency>
+            <groupId>quartz</groupId>
+            <artifactId>quartz</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+    </dependencies>
+
+
+
+    <build>
+        <finalName>whatslive-web-${project.parent.version}-${active.profile.id}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warSourceDirectory>web</warSourceDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+    <!-- 针对不同运行环境的配置 -->
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <active.profile.id>local</active.profile.id>
+                <!-- 数据库相关配置 -->
+                <jdbc.url>jdbc:mysql://10.154.252.153:3306/whatslive_test?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF8</jdbc.url>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>letv@2014</jdbc.password>
+                <mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</mongo.replica.set>
+                <mongo.database>whatslive-test</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>20</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>52b2ce34b6cb814</mongo.password>
+                <redis.write.host>10.154.157.167</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.167</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redis.cluster.ip></redis.cluster.ip>
+                <redis.cluster.port></redis.cluster.port>
+                <redis.client.name>jedisTemplate</redis.client.name>
+                <log.file>d:/letv/logs/apps/whatslive-cms/web.log</log.file>
+                <log.local.ip>127.0.0.1</log.local.ip>
+                <sso.checkUser.host>http://sso.leshiren.cn:20008/</sso.checkUser.host>
+                <upload.server.host>http://127.0.0.1:80/static/staticfile/</upload.server.host>
+                <upload.path.root>D:/develop/soft/apache-tomcat-8.0.23/webapps/ROOT/static/staticfile/</upload.path.root>
+                <file.upload.type>LETV_CDN</file.upload.type>
+                <file.upload.service>letvCdnService</file.upload.service>
+                <aws.accessKeyId>AKIAIWBAUSNGMTEPYJIA</aws.accessKeyId>
+                <aws.secretKey>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</aws.secretKey>
+                <aws.s3.url>http://s3.amazonaws.com/</aws.s3.url>
+                <aws.s3.bucketName>whatslivetest</aws.s3.bucketName>
+                <api.cdn.host>http://api.platform.letv.cn/</api.cdn.host>
+                <api.cdn.sys>lhtesting</api.cdn.sys>
+                <push.host>http://127.0.0.1:8022/whatslive/</push.host>
+                <letv.cloud.userid>802054</letv.cloud.userid>
+                <letv.cloud.secret>83e7769aa728ffd9528f96d8813aa1ad</letv.cloud.secret>
+                <letv.live.uuid>vxnnn6zh6b</letv.live.uuid>
+                <letv.web.url>http://dev.lehi.letv.com/web/webLive?id=</letv.web.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <active.profile.id>dev</active.profile.id>
+                <!-- 数据库相关配置 -->
+                <jdbc.url>jdbc:mysql://10.154.252.153:3306/whatslive_test?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF8</jdbc.url>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>letv@2014</jdbc.password>
+                <mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</mongo.replica.set>
+                <mongo.database>whatslive-test</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>20</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>52b2ce34b6cb814</mongo.password>
+                <redis.write.host>10.154.157.167</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.167</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redis.cluster.ip></redis.cluster.ip>
+                <redis.cluster.port></redis.cluster.port>
+                <redis.client.name>jedisTemplate</redis.client.name>
+                <log.file>/letv/logs/apps/whatslive-cms/web.log</log.file>
+                <log.local.ip>10.104.29.19</log.local.ip>
+                <sso.checkUser.host>http://sso.leshiren.cn:20008/</sso.checkUser.host>
+                <upload.server.host>http://10.104.29.19:8090/static/staticfile/</upload.server.host>
+                <upload.path.root>/letv/app/whatslive-web/static/staticfile/</upload.path.root>
+                <file.upload.type>LETV_CDN</file.upload.type>
+                <file.upload.service>letvCdnService</file.upload.service>
+                <aws.accessKeyId>AKIAIWBAUSNGMTEPYJIA</aws.accessKeyId>
+                <aws.secretKey>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</aws.secretKey>
+                <aws.s3.url>http://s3.amazonaws.com/</aws.s3.url>
+                <aws.s3.bucketName>whatslivetest</aws.s3.bucketName>
+                <api.cdn.host>http://api.platform.letv.cn/</api.cdn.host>
+                <api.cdn.sys>lhtesting</api.cdn.sys>
+                <push.host>http://10.104.29.19:8022/whatslive/</push.host>
+                <letv.cloud.userid>802054</letv.cloud.userid>
+                <letv.cloud.secret>83e7769aa728ffd9528f96d8813aa1ad</letv.cloud.secret>
+                <letv.live.uuid>vxnnn6zh6b</letv.live.uuid>
+                <letv.web.url>http://dev.lehi.letv.com/web/webLive?id=</letv.web.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <active.profile.id>test</active.profile.id>
+                <!-- 数据库相关配置 -->
+                <jdbc.url>jdbc:mysql://10.154.252.153:3306/whatslive_testing?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF8</jdbc.url>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>letv@2014</jdbc.password>
+                <mongo.replica.set>10.154.156.170:9014,10.154.156.172:9014,10.154.156.175:9014</mongo.replica.set>
+                <mongo.database>whatslive</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>20</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>52b2ce34b6cb814</mongo.password>
+                <redis.write.host>10.154.157.165</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd></redis.write.passwd>
+                <redis.read.host>10.154.157.165</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd></redis.read.passwd>
+                <redis.cluster.ip></redis.cluster.ip>
+                <redis.cluster.port></redis.cluster.port>
+                <redis.client.name>jedisTemplate</redis.client.name>
+                <log.file>/letv/logs/apps/whatslive-cms/web.log</log.file>
+                <log.local.ip>10.104.29.13</log.local.ip>
+                <sso.checkUser.host>http://sso.leshiren.cn:20008/</sso.checkUser.host>
+                <upload.server.host>http://10.104.29.13:8090/static/staticfile/</upload.server.host>
+                <upload.path.root>/letv/app/whatslive-web/static/staticfile/</upload.path.root>
+                <file.upload.type>LETV_CDN</file.upload.type>
+                <file.upload.service>letvCdnService</file.upload.service>
+                <aws.accessKeyId>AKIAIWBAUSNGMTEPYJIA</aws.accessKeyId>
+                <aws.secretKey>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</aws.secretKey>
+                <aws.s3.url>http://s3.amazonaws.com/</aws.s3.url>
+                <aws.s3.bucketName>whatslivetest</aws.s3.bucketName>
+                <api.cdn.host>http://api.platform.letv.cn/</api.cdn.host>
+                <api.cdn.sys>livetest</api.cdn.sys>
+                <push.host>http://10.104.29.13:8022/whatslive/</push.host>
+                <letv.cloud.userid>803473</letv.cloud.userid>
+                <letv.cloud.secret>96f1fa1e58c5243a058b84e41926da9e</letv.cloud.secret>
+                <letv.live.uuid>fpzuozvzoz</letv.live.uuid>
+                <letv.web.url>http://test.lehi.letv.com/web/webLive?id=</letv.web.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <active.profile.id>prod</active.profile.id>
+                <!-- 数据库相关配置 -->
+                <jdbc.url>jdbc:mysql://10.181.155.211:3306/whatslive?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF8</jdbc.url>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>lehi@2015</jdbc.password>
+                <mongo.replica.set>10.150.130.28:9014,10.150.130.30:9014,10.150.130.32:9014</mongo.replica.set>
+                <mongo.database>whatslive</mongo.database>
+                <mongo.auth>admin</mongo.auth>
+                <mongo.connections>20</mongo.connections>
+                <mongo.user>admin</mongo.user>
+                <mongo.password>c568baf64d230b5</mongo.password>
+
+                <redis.write.host>10.200.93.225</redis.write.host>
+                <redis.write.port>6379</redis.write.port>
+                <redis.write.passwd>h2zIokBeymzd:t7</redis.write.passwd>
+                <redis.read.host>10.200.93.231</redis.read.host>
+                <redis.read.port>6379</redis.read.port>
+                <redis.read.passwd>h2zIokBeymzd:t7</redis.read.passwd>
+                <redis.cluster.ip></redis.cluster.ip>
+                <redis.cluster.port></redis.cluster.port>
+                <redis.client.name>jedisTemplate</redis.client.name>
+
+                <log.file>/letv/logs/apps/whatslive-cms/web.log</log.file>
+                <log.local.ip>220.181.155.211</log.local.ip>
+
+                <sso.checkUser.host>http://sso.leshiren.cn:20008/</sso.checkUser.host>
+                <upload.server.host>http://220.181.155.211:8090/static/staticfile/</upload.server.host>
+                <upload.path.root>/letv/apps/whatslive-web/static/staticfile/</upload.path.root>
+                <file.upload.type>LETV_CDN</file.upload.type>
+                <file.upload.service>letvCdnService</file.upload.service>
+                <aws.accessKeyId>AKIAIWBAUSNGMTEPYJIA</aws.accessKeyId>
+                <aws.secretKey>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</aws.secretKey>
+                <aws.s3.url>http://s3.amazonaws.com/</aws.s3.url>
+                <aws.s3.bucketName>whatslivetest</aws.s3.bucketName>
+                <api.cdn.host>http://api.platform.letv.cn/</api.cdn.host>
+                <api.cdn.sys>lehi</api.cdn.sys>
+                <push.host>http://10.181.155.230:8022/whatslive/</push.host>
+                <letv.cloud.userid>257897</letv.cloud.userid>
+                <letv.cloud.secret>541101e0d3321f43d7254a97579e7bcf</letv.cloud.secret>
+                <letv.live.uuid>cd5f283012</letv.live.uuid>
+                <letv.web.url>http://lehi.letv.com/web/webLive?id=</letv.web.url>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

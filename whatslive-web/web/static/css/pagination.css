@@ -1,0 +1,16 @@
+﻿.pagination{overflow: hidden;}
+.pagination a{float: left; border: 1px solid #dfdfdf; height: 28px;  line-height: 28px; color: #3d3d3d; padding: 0 12px;}
+.pagination a.hover,.pagination a:hover{color: #fff; background: #3187dc;}
+.pagination a.current{background: #3187dc; color: #fff;}
+.pagination a.prev-disabled{background: #ffffff; margin-right: 4px; text-decoration:none}
+.pagination a.prev-disabled:hover{color: #3d3d3d; background: #ffffff; margin-right: 4px; text-decoration:none}
+.pagination a.next-disabled{background: #ffffff; margin-left: 4px; text-decoration:none}
+.pagination a.next-disabled:hover{color: #3d3d3d; background: #ffffff; margin-left: 4px; text-decoration:none}
+.pagin_prev{margin-right: 4px;}
+.pagin_next{margin-left: 4px;}
+.pagination a.pagin_more{color: #dfdfdf; margin: 0 6px; border: none;}
+.pagination a.pagin_more:hover{background: none; color: #3187dc;}
+.pagin_num{ overflow: hidden; float: left;}
+.pagin_go{float: left; overflow: hidden; vertical-align: bottom; line-height: 30px; color: #898989; margin-left: 30px; width: 198px;}
+.input_go{width: 43px; border-width: 1px 2px; border-color: #dfdfdf; border-style: solid; height: 18px; line-height: 18px; margin: 0 4px;}
+.pagination a.btn_go{float: right; height: 20px; line-height: 20px; color: #fff; background: #3187dc; margin: 3px 0 0 5px;}

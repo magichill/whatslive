@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="apiInnerService" class="com.letv.whatslive.web.service.common.ApiInnerService">
+        <constructor-arg index="0" ref="${file.upload.service}"/>
+    </bean>
+
+    <bean id="amazonS3Service" class="com.letv.whatslive.web.service.storage.aws.AmazonS3Service" lazy-init="true">
+    </bean>
+
+    <bean id="letvCdnService" class="com.letv.whatslive.web.service.storage.cdn.LetvCdnService">
+    </bean>
+
+</beans>

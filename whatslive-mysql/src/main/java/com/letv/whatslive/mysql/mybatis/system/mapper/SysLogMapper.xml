@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letv.whatslive.mysql.mybatis.system.SysLogDao" >
+
+	<resultMap id="sysLogResultMap" type="SysLog" >
+		<id  property="id" column="ID"/>
+		<result property="opUserid" column="OP_USERID"/>
+        <result property="opUserName" column="OP_USERNAME"/>
+		<result property="clientIp" column="CLIENT_IP"/>
+		<result property="systemId" column="SYSTEM_ID"/>
+		<result property="opTime" column="OP_TIME"/>
+		<result property="opType" column="OP_TYPE"/>
+		<result property="opBefore" column="OP_BEFORE"/>
+		<result property="opAfter" column="OP_AFTER"/>
+		<result property="opObjectid" column="OP_OBJECTID"/>
+	</resultMap>
+  
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SysLog" >
+		insert into SYS_LOG (
+        OP_USERID,CLIENT_IP,SYSTEM_ID,OP_TIME,OP_TYPE,
+        OP_BEFORE,OP_AFTER,OP_OBJECTID
+        ) values (
+        #{opUserid},#{clientIp},#{systemId},#{opTime},#{opType},
+        #{opBefore},#{opAfter},#{opObjectid}
+        )
+	</insert>
+
+    <insert id="insertSysLog" useGeneratedKeys="true" keyProperty="id" parameterType="map" >
+		insert into SYS_LOG (
+        OP_USERID,CLIENT_IP,SYSTEM_ID,OP_TIME,OP_TYPE,
+        OP_BEFORE,OP_AFTER,OP_OBJECTID
+        ) values (
+        #{opUserid},#{clientIp},#{systemId},#{opTime},#{opType},
+        #{opBefore},#{opAfter},#{opObjectid}
+        )
+	</insert>
+
+	<update id="update" parameterType="SysLog">
+		update SYS_LOG
+    	<set>
+  			<if test="opUserid != null">OP_USERID=#{opUserid},</if>
+  			<if test="clientIp != null">CLIENT_IP=#{clientIp},</if>
+  			<if test="systemId != null">SYSTEM_ID=#{systemId},</if>
+  			<if test="opTime != null">OP_TIME=#{opTime},</if>
+  			<if test="opType != null">OP_TYPE=#{opType},</if>
+  			<if test="opBefore != null">OP_BEFORE=#{opBefore},</if>
+  			<if test="opAfter != null">OP_AFTER=#{opAfter},</if>
+  			<if test="opObjectid != null">OP_OBJECTID=#{opObjectid}</if>
+		</set>
+		where ID=#{id}
+	</update>
+  
+	<select id="getSysLogById" parameterType="int" resultMap="sysLogResultMap">
+		select * from SYS_LOG
+		where ID=#{id} 
+	</select>
+  
+	<select id="countSysLog" parameterType="map" resultType="int">
+		select count(*) from SYS_LOG
+        inner join SYS_USER on SYS_LOG.OP_USERID=SYS_USER.ID
+		<include refid="queryCondition"/>
+	</select>
+  
+	<select id="getSysLogList" parameterType="map" resultMap="sysLogResultMap">
+		select SYS_USER.LOGIN_NAME as OP_USERNAME, SYS_LOG.*
+        from SYS_LOG
+        inner join SYS_USER on SYS_LOG.OP_USERID=SYS_USER.ID
+        <include refid="queryCondition"/>
+        order by SYS_USER.ID desc
+        <if test="start != null  and limit != null">
+            limit #{start},#{limit};
+        </if>
+	</select>
+  
+	<sql id="queryCondition">
+		<where>
+			<if test="id != null">SYS_LOG.ID=#{id}</if>
+			<if test="opUserid != null">and SYS_LOG.OP_USERID=#{opUserid}</if>
+			<if test="clientIp != null">and SYS_LOG.CLIENT_IP=#{clientIp}</if>
+			<if test="systemId != null">and SYS_LOG.SYSTEM_ID=#{systemId}</if>
+            <if test="opTime != null">
+                and SYS_LOG.OP_TIME like concat('%',#{opTime},'%')
+            </if>
+            <if test="opType != null">
+                and SYS_LOG.OP_TYPE like concat('%',#{opType},'%')
+            </if>
+			<if test="opBefore != null">and SYS_LOG.OP_BEFORE=#{opBefore}</if>
+			<if test="opAfter != null">and SYS_LOG.OP_AFTER=#{opAfter}</if>
+			<if test="opObjectid != null">and SYS_LOG.OP_OBJECTID=#{opObjectid}</if>
+            <if test="opUserName !=null"> and SYS_USER.LOGIN_NAME=#{opUserName}</if>
+		</where>
+	</sql>
+
+</mapper>
